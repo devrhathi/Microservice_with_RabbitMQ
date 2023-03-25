@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  rabbitmq:
+    image: rabbitmq
+    container_name: rabbitmq
+    networks:
+      - rabbitmq_network
+
+  producer:
+    build: ./producer
+    ports:
+      - "5000:5000"
+    networks:
+      - microservices_network
+    depends_on:
+      - rabbitmq
+
+networks:
+  rabbitmq_network:
+  microservices_network:
