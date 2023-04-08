@@ -5,4 +5,4 @@ run container with ports specified
 docker run --rm  --network rabbitmq_network -it -p 15672:15672 -p 5672:5672 --name rabbitmq rabbitmq
 
 check what networks current container is connected to
-docker container inspect f2a1308de698591a5740eac8649e20b77712dbdc6fdb955c00aa5334a3c8a8c1
+docker container inspect container_id
