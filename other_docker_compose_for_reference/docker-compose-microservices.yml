@@ -1,0 +1,16 @@
+services:
+  producer:
+    build: ./producer
+    ports:
+      - "5672:5672"
+    networks:
+      - rabbitmq_network
+      - microservices_network
+    depends_on:
+      - rabbitmq
+    links:
+      - rabbitmq
+
+networks:
+  rabbitmq_network:
+  microservices_network:

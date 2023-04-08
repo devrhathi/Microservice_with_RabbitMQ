@@ -1,11 +1,14 @@
 from flask import Flask, request
 import pika
+import time
 
 app = Flask(__name__)
 
 # RabbitMQ connection
-connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+connection = pika.BlockingConnection(pika.ConnectionParameters(host='172.21.0.1'))
 channel = connection.channel()
+
+print('Connection Successful',connection)
 
 # Declare exchanges and queues
 channel.exchange_declare(exchange='health_check_exchange', exchange_type='direct')
@@ -57,3 +60,4 @@ def delete_record():
 if __name__ == '__main__':
     print("Producer Started")
     app.run(host='0.0.0.0', port=5000, debug=True)
+

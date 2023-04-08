@@ -10,7 +10,7 @@ services:
   producer:
     build: ./producer
     ports:
-      - "5000:5000"
+      - "5672:5672"
     networks:
       - microservices_network
     depends_on:
@@ -45,9 +45,21 @@ services:
       - rabbitmq
 
   database:
+    image: mongo:latest
+    container_name: database
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: ccproject
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data:/data/db
+    command: mongod --auth
     networks:
       - microservices_network
-  
+
+
 networks:
   rabbitmq_network:
   microservices_network:

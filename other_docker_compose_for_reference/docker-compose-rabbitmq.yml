@@ -1,0 +1,12 @@
+services:
+  rabbitmq:
+    image: rabbitmq
+    container_name: rabbitmq
+    networks:
+      - rabbitmq_network
+      - microservices_network
+
+networks:
+  rabbitmq_network:
+    external: true
+  microservices_network:

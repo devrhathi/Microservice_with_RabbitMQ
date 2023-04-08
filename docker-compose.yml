@@ -1,21 +1,48 @@
-version: "3.8"
-
 services:
-  rabbitmq:
-    image: rabbitmq
-    container_name: rabbitmq
-    networks:
-      - rabbitmq_network
-
   producer:
     build: ./producer
     ports:
       - "5000:5000"
     networks:
       - microservices_network
-    depends_on:
-      - rabbitmq
-
+      - rabbitmq_network
+  consumer_one:
+    build: ./consumer_one
+    networks:
+      - microservices_network
+      - rabbitmq_network
+  consumer_two:
+    build: ./consumer_one
+    networks:
+      - microservices_network
+      - rabbitmq_network
+  consumer_three:
+    build: ./consumer_one
+    networks:
+      - microservices_network
+      - rabbitmq_network
+  consumer_four:
+    build: ./consumer_one
+    networks:
+      - microservices_network
+      - rabbitmq_network
+  database:
+    image: mongo:latest
+    container_name: database
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: ccproject
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data:/data/db
+    command: mongod --auth
+    networks:
+      - microservices_network
+      - rabbitmq_network
 networks:
-  rabbitmq_network:
   microservices_network:
+    name: microservices_network
+  rabbitmq_network:
+    name: rabbitmq_network
