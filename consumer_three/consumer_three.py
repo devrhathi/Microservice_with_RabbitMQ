@@ -3,12 +3,12 @@ import pymongo
 
 print('Started Consumer 3')
 
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='172.21.0.1'))
+connection = pika.BlockingConnection(pika.ConnectionParameters(host='172.28.0.1'))
 channel = connection.channel()
 
 channel.queue_declare(queue='delete_record_queue', durable=True)
 
-client = pymongo.MongoClient("mongodb://mongodb:27017/", username='root', password='ccproject')
+client = pymongo.MongoClient("mongodb://database:27017/", username='root', password='ccproject')
 
 db = client["mydatabase"]
 col = db["students"]

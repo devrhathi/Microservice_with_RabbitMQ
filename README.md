@@ -29,3 +29,5 @@ docker compose up
 - [ ] None of the consumers are printing anything in the logs (console) using python's print statement (even though they are being executed)
 
 - [ ] Read database not working
+
+- [ ] All requests are working for the first time, then the consumers stop performing the action

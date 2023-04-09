@@ -3,17 +3,16 @@ import pymongo
 
 print('Started Consumer 2')
 
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='172.21.0.1'))
+connection = pika.BlockingConnection(pika.ConnectionParameters(host='172.28.0.1'))
 channel = connection.channel()
 
 channel.queue_declare(queue='insert_record_queue', durable=True)
 
-client = pymongo.MongoClient("mongodb://mongodb:27017/", username='root', password='ccproject')
+client = pymongo.MongoClient("mongodb://database:27017/", username='root', password='ccproject')
 db = client["mydatabase"]
 col = db["students"]
 
 def callback(ch, method, properties, body):
-    print("---------------- HELLO I AM DEV ----------------")
     print(" [x] Received %r" % body.decode())
     data = body.decode().split(',')
     name = data[0].strip()

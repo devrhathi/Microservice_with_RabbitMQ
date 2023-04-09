@@ -1,7 +1,8 @@
 import pika
 print('Started Consumer 1')
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='172.21.0.1'))
+connection = pika.BlockingConnection(pika.ConnectionParameters(host='172.28.0.1'))
 channel = connection.channel()
+
 
 channel.queue_declare(queue='health_check_queue', durable=True)
 

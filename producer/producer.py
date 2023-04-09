@@ -5,7 +5,7 @@ import time
 app = Flask(__name__)
 
 # RabbitMQ connection
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='172.21.0.1'))
+connection = pika.BlockingConnection(pika.ConnectionParameters(host='172.28.0.1'))
 channel = connection.channel()
 
 print('Connection Successful',connection)
@@ -20,11 +20,11 @@ channel.queue_bind(exchange='health_check_exchange', queue='health_check_queue',
 channel.queue_declare(queue='insert_record_queue', durable=True)
 channel.queue_bind(exchange='database_exchange', queue='insert_record_queue', routing_key='insert_record_key')
 
-channel.queue_declare(queue='read_database_queue', durable=True)
-channel.queue_bind(exchange='database_exchange', queue='read_database_queue', routing_key='read_database_key')
-
 channel.queue_declare(queue='delete_record_queue', durable=True)
 channel.queue_bind(exchange='database_exchange', queue='delete_record_queue', routing_key='delete_record_key')
+
+channel.queue_declare(queue='read_database_queue', durable=True)
+channel.queue_bind(exchange='database_exchange', queue='read_database_queue', routing_key='read_database_key')
 
 # HTTP Server for health check
 @app.route('/health_check', methods=['GET'])
@@ -44,11 +44,6 @@ def insert_record():
     channel.basic_publish(exchange='database_exchange', routing_key='insert_record_key', body=message)
     return 'Record inserted'
 
-# HTTP Server for reading all records
-@app.route('/read_database', methods=['GET'])
-def read_database():
-    channel.basic_publish(exchange='database_exchange', routing_key='read_database_key', body='')
-    return 'All records retrieved'
 
 # HTTP Server for deleting record based on SRN
 @app.route('/delete_record', methods=['GET'])
@@ -56,6 +51,12 @@ def delete_record():
     srn = request.args.get('srn')
     channel.basic_publish(exchange='database_exchange', routing_key='delete_record_key', body=srn)
     return f"Record with SRN {srn} deleted"
+
+# HTTP Server for reading all records
+@app.route('/read_database', methods=['GET'])
+def read_database():
+    channel.basic_publish(exchange='database_exchange', routing_key='read_database_key', body='')
+    return 'All records retrieved'
 
 if __name__ == '__main__':
     print("Producer Started")
