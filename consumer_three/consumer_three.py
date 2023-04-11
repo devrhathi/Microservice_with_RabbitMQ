@@ -14,11 +14,7 @@ col = db["students"]
 def callback(ch, method, properties, body):
     srn = body.decode().strip()
     myquery = {"srn": srn}
-    x = col.delete_one(myquery)
-    if x.deleted_count == 0:
-        print('No entry having SRN:', srn, 'found',flush=True)
-    else:
-        print(x.deleted_count, " documents deleted.",flush=True)
+    x = col.delete_many(myquery)
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
 channel.basic_consume(queue='delete_record_queue', on_message_callback=callback)

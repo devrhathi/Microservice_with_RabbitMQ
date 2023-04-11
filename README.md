@@ -8,7 +8,7 @@
 
 ```
 docker network create rabbitmq_network
-docker run --rm  --network rabbitmq_network -it -p 15672:15672 -p 5672:5672 --name rabbitmq rabbitmq
+docker run --rm  --network rabbitmq_network -it -p 15672:15672 -p 5672:5672 --name rabbitmq -e RABBITMQ_HEARTBEAT=600 rabbitmq
 ```
 
 3. Execute `docker network inspect rabbitmq_network` and replace IP address in ConnectionParameters in producer and all consumers with the Gatway IP address shown.
@@ -32,4 +32,4 @@ docker compose up
 
 - [x] All requests are working for the first time, then the consumers are caching the action
 
-- [ ] in delete_record request, find a way to return error Ack from consumer_three if srn passed to producer is not there in database
+- [ ] Follow all instructions mentioned in README.md, and try it on your local machine

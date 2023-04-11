@@ -14,8 +14,7 @@ col = db["students"]
 def callback(ch, method, properties, body):
     docs = col.find()
     for doc in docs:
-        print(doc)
-    print(flush=True)
+        print(doc,flush=True)
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
 channel.basic_consume(queue='read_database_queue', on_message_callback=callback)

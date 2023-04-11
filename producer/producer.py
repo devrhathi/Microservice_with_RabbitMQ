@@ -30,6 +30,8 @@ channel.queue_bind(exchange='database_exchange', queue='read_database_queue', ro
 @app.route('/health_check', methods=['GET'])
 def health_check():
     message = request.args.get('message')
+    if(message == None):
+        return 'Please enter message as a parameter to the GET request'
     channel.basic_publish(exchange='health_check_exchange', routing_key='health_check_key', body=message)
     return 'Message published to health check queue'
 
@@ -49,7 +51,7 @@ def insert_record():
 @app.route('/delete_record', methods=['GET'])
 def delete_record():
     srn = request.args.get('srn')
-    channel.basic_publish(exchange='database_exchange', routing_key='delete_record_key', body=srn)
+    result = channel.basic_publish(exchange='database_exchange', routing_key='delete_record_key', body=srn)
     return f"Record with SRN {srn} deleted"
 
 # HTTP Server for reading all records
