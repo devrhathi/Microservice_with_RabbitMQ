@@ -5,7 +5,7 @@ import time
 app = Flask(__name__)
 
 # RabbitMQ connection
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='172.28.0.1'))
+connection = pika.BlockingConnection(pika.ConnectionParameters(host='172.28.0.1', heartbeat=800))
 channel = connection.channel()
 
 print('Connection Successful',connection)

@@ -1,9 +1,6 @@
 import pika
 import pymongo
 
-print('Started Consumer 4')
-
-
 connection = pika.BlockingConnection(pika.ConnectionParameters(host='172.28.0.1'))
 channel = connection.channel()
 
@@ -15,13 +12,13 @@ db = client["mydatabase"]
 col = db["students"]
 
 def callback(ch, method, properties, body):
-    print(" [x] Received %r" % body.decode())
     docs = col.find()
     for doc in docs:
         print(doc)
+    print(flush=True)
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
 channel.basic_consume(queue='read_database_queue', on_message_callback=callback)
 
-print(' [*] Waiting for messages. To exit press CTRL+C')
+print(' [*] Waiting for messages. To exit press CTRL+C',flush=True)
 channel.start_consuming()

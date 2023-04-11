@@ -20,14 +20,16 @@ docker compose build
 docker compose up
 ```
 
-4. To restart, press `ctrl+c` in both terminals, then run `docker compose down` where microservices were running (not rabbitmq terminal) and start from step 1
+4. To restart, press `ctrl+c` in both terminals, then run start from step 1
 
 ## Issues to fix
 
-- [ ] After a while, RabbitMQ connection to producer automatically stops saying : "missed heartbeats from client, timeout: 60s"
+- [x] After a while, RabbitMQ connection to producer automatically stops saying : "missed heartbeats from client, timeout: 60s"
 
-- [ ] None of the consumers are printing anything in the logs (console) using python's print statement (even though they are being executed)
+- [x] None of the consumers are printing anything in the logs (console) using python's print statement (even though they are being executed)
 
 - [x] Read database not working
 
-- [ ] All requests are working for the first time, then the consumers stop performing the action
+- [x] All requests are working for the first time, then the consumers are caching the action
+
+- [ ] in delete_record request, find a way to return error Ack from consumer_three if srn passed to producer is not there in database
