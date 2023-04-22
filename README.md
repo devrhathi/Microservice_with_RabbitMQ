@@ -22,14 +22,3 @@ docker compose up
 
 4. To restart, press `ctrl+c` in both terminals, then run start from step 1
 
-## Issues to fix
-
-- [x] After a while, RabbitMQ connection to producer automatically stops saying : "missed heartbeats from client, timeout: 60s"
-
-- [x] None of the consumers are printing anything in the logs (console) using python's print statement (even though they are being executed)
-
-- [x] Read database not working
-
-- [x] All requests are working for the first time, then the consumers are caching the action
-
-- [ ] Follow all instructions mentioned in README.md, and try it on your local machine
