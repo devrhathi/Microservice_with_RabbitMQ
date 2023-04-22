@@ -33,7 +33,7 @@ def health_check():
     if(message == None):
         return 'Please enter message as a parameter to the GET request'
     channel.basic_publish(exchange='health_check_exchange', routing_key='health_check_key', body=message)
-    return 'Message published to health check queue'
+    return f"The Message:{message.decode()} has been effectively delivered and stored in the health check queue"
 
 # HTTP Server for inserting record
 @app.route('/insert_record', methods=['POST'])
