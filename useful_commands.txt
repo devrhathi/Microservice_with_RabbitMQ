@@ -1,8 +1,0 @@
-run a container attached to network, remove container when service is stopped
-docker run --rm --network rabbitmq_network rabbitmq
-
-run container with ports specified
-docker run --rm  --network rabbitmq_network -it -p 15672:15672 -p 5672:5672 --name rabbitmq rabbitmq
-
-check what networks current container is connected to
-docker container inspect container_id
