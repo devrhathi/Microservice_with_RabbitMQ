@@ -1,7 +1,7 @@
 import pika
 
 # Establish connection with RabbitMQ server
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='172.28.0.1'))
+connection = pika.BlockingConnection(pika.ConnectionParameters(host='172.21.0.1'))
 channel = connection.channel()
 
 # Declare a queue named 'health_check_queue' with durable=True to ensure messages are not lost even if RabbitMQ server restarts

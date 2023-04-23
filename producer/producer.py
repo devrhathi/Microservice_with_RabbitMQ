@@ -7,7 +7,7 @@ import time
 app = Flask(__name__)
 
 # Establish RabbitMQ connection
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='172.28.0.1', heartbeat=800))
+connection = pika.BlockingConnection(pika.ConnectionParameters(host='172.21.0.1', heartbeat=800))
 channel = connection.channel()
 
 # Declare exchanges and queues
@@ -35,7 +35,7 @@ def health_check():
         return 'Please enter message as a parameter to the GET request'
     # Publish message to the health check queue
     channel.basic_publish(exchange='health_check_exchange', routing_key='health_check_key', body=message)
-    return f"The Message:{message.decode()} has been effectively delivered and stored in the health check queue"
+    return f"The Message: {message} has been effectively delivered and processed in the health check queue"
 
 # HTTP Server for inserting record
 @app.route('/insert_record', methods=['POST'])

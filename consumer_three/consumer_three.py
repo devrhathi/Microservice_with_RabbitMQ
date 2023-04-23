@@ -3,7 +3,7 @@ import pika
 import pymongo
 
 #Establishing connection with RabbitMQ server
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='172.28.0.1'))
+connection = pika.BlockingConnection(pika.ConnectionParameters(host='172.21.0.1'))
 channel = connection.channel()
 
 #Declaring queue for receiving messages
