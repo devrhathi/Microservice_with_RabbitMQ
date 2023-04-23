@@ -46,12 +46,6 @@ def insert_record():
     channel.basic_publish(exchange='database_exchange', routing_key='insert_record_key', body=message)
     return 'Record inserted'
 
-# HTTP Server for reading all records
-@app.route('/read_database', methods=['GET'])
-def read_database():
-    channel.basic_publish(exchange='database_exchange', routing_key='read_database_key', body='')
-    return 'All records retrieved'
-
 # HTTP Server for deleting record based on SRN
 @app.route('/delete_record', methods=['GET'])
 def delete_record():
@@ -59,6 +53,11 @@ def delete_record():
     result = channel.basic_publish(exchange='database_exchange', routing_key='delete_record_key', body=srn)
     return f"Record with SRN {srn} deleted"
 
+# HTTP Server for reading all records
+@app.route('/read_database', methods=['GET'])
+def read_database():
+    channel.basic_publish(exchange='database_exchange', routing_key='read_database_key', body='')
+    return 'All records retrieved'
 
 if __name__ == '__main__':
     print("Producer Started")
